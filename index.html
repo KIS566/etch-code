@@ -34,6 +34,7 @@
             --radius-xl: 36px;
             --ease-expo: cubic-bezier(0.19,1,0.22,1);
             --ease-back: cubic-bezier(0.34,1.56,0.64,1);
+            --logo-url: url('https://raw.githubusercontent.com/KIS566/etch-code/main/cropped_circle_image.png');
         }
         body {
             --champagne: #080605;
@@ -84,12 +85,14 @@
         @media(max-width:768px) { .container { padding:0 1.5rem; } }
 
         /* Preloader */
-        .preloader { position:fixed; inset:0; z-index:100000; background:#080605; display:flex; align-items:center; justify-content:center; transition:opacity 0.7s,visibility 0.7s; }
+        .preloader { position:fixed; inset:0; z-index:100000; background:#080605; display:flex; align-items:center; justify-content:center; transition:opacity 0.7s,visibility 0.7s; flex-direction:column; gap:1.5rem; }
         .preloader.hidden { opacity:0; visibility:hidden; pointer-events:none; }
         .preloader-content { text-align:center; }
+        .preloader-logo-img { width:90px; height:90px; border-radius:50%; border:3px solid #D4AF37; object-fit:cover; animation:preloaderPulse 2s ease-in-out infinite; }
+        @keyframes preloaderPulse { 0%,100%{transform:scale(1);box-shadow:0 0 20px rgba(212,175,55,0.3);} 50%{transform:scale(1.08);box-shadow:0 0 40px rgba(212,175,55,0.6);} }
         .preloader-logo { font-family:'Playfair Display',serif; font-size:3.5rem; font-weight:800; color:#FDFAF6; letter-spacing:1px; }
         .preloader-logo span { color:var(--gold-bright); font-style:italic; }
-        .preloader-line { width:180px; height:2px; background:rgba(253,250,246,0.1); margin:1.5rem auto 0; border-radius:2px; overflow:hidden; }
+        .preloader-line { width:180px; height:2px; background:rgba(253,250,246,0.1); margin:0 auto; border-radius:2px; overflow:hidden; }
         .preloader-line-fill { height:100%; background:linear-gradient(90deg,var(--gold),var(--gold-bright),var(--gold)); width:0; animation:preloaderFill 2s var(--ease-expo) forwards; }
         @keyframes preloaderFill { 0% { width:0; } 100% { width:100%; } }
 
@@ -99,8 +102,8 @@
         body.light-mode .navbar.scrolled { background:rgba(253,250,246,0.75); }
         .nav-inner { max-width:1400px; margin:0 auto; display:flex; justify-content:space-between; align-items:center; height:90px; }
         .logo { font-family:'Playfair Display',serif; font-weight:800; font-size:2rem; text-decoration:none; color:var(--text-primary); display:flex; align-items:center; gap:0.6rem; z-index:1001; letter-spacing:0.5px; }
-        .logo-mark { width:44px; height:44px; background:linear-gradient(135deg,var(--gold),var(--gold-bright)); border-radius:12px; display:flex; align-items:center; justify-content:center; font-family:'JetBrains Mono',monospace; font-weight:700; font-size:1.1rem; color:#0A1F1A; transition:all 0.5s var(--ease-back); box-shadow:0 4px 15px rgba(200,168,130,0.5); }
-        .logo:hover .logo-mark { transform:rotate(-8deg) scale(1.1); box-shadow:0 8px 25px rgba(200,168,130,0.7); }
+        .logo-img { width:44px; height:44px; border-radius:50%; border:2px solid #D4AF37; object-fit:cover; transition:all 0.5s var(--ease-back); box-shadow:0 4px 15px rgba(200,168,130,0.5); }
+        .logo:hover .logo-img { transform:rotate(-8deg) scale(1.1); box-shadow:0 8px 25px rgba(200,168,130,0.7); }
         .nav-links { display:flex; align-items:center; gap:2.8rem; list-style:none; }
         .nav-links a { text-decoration:none; color:var(--text-secondary); font-weight:500; font-size:0.9rem; transition:color 0.3s; position:relative; padding:0.4rem 0; letter-spacing:0.3px; }
         .nav-links a::after { content:''; position:absolute; bottom:-4px; left:0; width:0; height:2px; background:var(--gold); transition:width 0.4s var(--ease-expo); border-radius:2px; }
@@ -221,7 +224,7 @@
         .footer { background:#0A1F1A; color:#FDFAF6; padding:5rem 0 2.5rem; margin-top:4rem; }
         .footer-grid { display:grid; grid-template-columns:2fr 1fr 1fr 1.2fr; gap:3rem; margin-bottom:3rem; }
         .footer-brand .footer-logo { font-family:'Playfair Display',serif; font-weight:800; font-size:1.8rem; color:#FDFAF6; text-decoration:none; display:flex; align-items:center; gap:0.6rem; margin-bottom:1rem; }
-        .footer-logo .logo-mark { width:40px; height:40px; background:linear-gradient(135deg,var(--gold),var(--gold-bright)); border-radius:10px; display:flex; align-items:center; justify-content:center; font-family:'JetBrains Mono',monospace; font-weight:700; font-size:1rem; color:#0A1F1A; }
+        .footer-logo-img { width:44px; height:44px; border-radius:50%; border:2px solid #D4AF37; object-fit:cover; }
         .footer-brand p { color:rgba(253,250,246,0.55); font-size:0.9rem; max-width:280px; }
         .footer-grid h4 { color:var(--gold-bright); font-family:'Inter',sans-serif; margin-bottom:1.4rem; font-size:0.78rem; text-transform:uppercase; letter-spacing:1.5px; font-weight:700; }
         .footer-links { list-style:none; display:flex; flex-direction:column; gap:0.6rem; }
@@ -242,11 +245,22 @@
     </style>
 </head>
 <body>
-    <div class="preloader" id="preloader"><div class="preloader-content"><div class="preloader-logo">Etch <span>&</span> Code</div><div class="preloader-line"><div class="preloader-line-fill"></div></div></div></div>
+    <!-- LOADING SCREEN WITH LOGO -->
+    <div class="preloader" id="preloader">
+        <img src="https://raw.githubusercontent.com/KIS566/etch-code/main/cropped_circle_image.png" alt="Etch & Code" class="preloader-logo-img">
+        <div class="preloader-content">
+            <div class="preloader-logo">Etch <span>&</span> Code</div>
+            <div class="preloader-line"><div class="preloader-line-fill"></div></div>
+        </div>
+    </div>
 
+    <!-- NAVBAR WITH LOGO -->
     <nav class="navbar" id="navbar">
         <div class="nav-inner">
-            <a href="#" class="logo"><div class="logo-mark">EC</div>Etch & Code</a>
+            <a href="#" class="logo">
+                <img src="https://raw.githubusercontent.com/KIS566/etch-code/main/cropped_circle_image.png" alt="EC" class="logo-img">
+                Etch & Code
+            </a>
             <ul class="nav-links" id="navLinks">
                 <li><a href="#home" class="active">Home</a></li>
                 <li><a href="#services">Services</a></li>
@@ -383,6 +397,7 @@
         </div>
     </section>
 
+    <!-- CONTACT SECTION WITH LOGO -->
     <section id="contact">
         <div class="container">
             <div class="section-label reveal">Contact</div>
@@ -399,8 +414,13 @@
                     <div id="formMsg" style="text-align:center;margin-top:1rem;"></div>
                 </div>
                 <div class="reveal" style="display:flex;flex-direction:column;gap:1.5rem;">
-                    <div style="background:var(--card-bg);padding:2rem;border-radius:var(--radius);border:1px solid var(--border);"><i class="fas fa-envelope" style="color:var(--gold-bright);font-size:1.5rem;"></i><h4 style="margin-top:0.8rem;">Email</h4><p style="color:var(--text-secondary);">hello@etchandcode.com</p></div>
-                    <div style="background:var(--card-bg);padding:2rem;border-radius:var(--radius);border:1px solid var(--border);"><i class="fas fa-map-marker-alt" style="color:var(--gold-bright);font-size:1.5rem;"></i><h4 style="margin-top:0.8rem;">Location</h4><p style="color:var(--text-secondary);">Barcelona, Spain · Worldwide</p></div>
+                    <div style="background:var(--card-bg);padding:2rem;border-radius:var(--radius);border:1px solid var(--border);text-align:center;">
+                        <img src="https://raw.githubusercontent.com/KIS566/etch-code/main/cropped_circle_image.png" alt="Etch & Code" style="width:70px;height:70px;border-radius:50%;border:2px solid #D4AF37;object-fit:cover;margin-bottom:1rem;">
+                        <h4>Etch & Code</h4>
+                        <p style="color:var(--text-secondary);">Premium Web Design & Development</p>
+                    </div>
+                    <div style="background:var(--card-bg);padding:2rem;border-radius:var(--radius);border:1px solid var(--border);"><i class="fas fa-envelope" style="color:var(--gold-bright);font-size:1.5rem;"></i><h4 style="margin-top:0.8rem;">Email</h4><p style="color:var(--text-secondary);">k9891p@gmail.com</p></div>
+                    <div style="background:var(--card-bg);padding:2rem;border-radius:var(--radius);border:1px solid var(--border);"><i class="fas fa-phone" style="color:var(--gold-bright);font-size:1.5rem;"></i><h4 style="margin-top:0.8rem;">Phone</h4><p style="color:var(--text-secondary);">+91 9355121175</p></div>
                 </div>
             </div>
         </div>
@@ -408,10 +428,17 @@
 
     <a href="https://wa.me/9355121175" target="_blank" class="wa-float" rel="noopener"><i class="fab fa-whatsapp"></i></a>
 
+    <!-- FOOTER WITH LOGO -->
     <footer class="footer">
         <div class="container">
             <div class="footer-grid">
-                <div class="footer-brand"><a href="#" class="footer-logo"><div class="logo-mark">EC</div>Etch & Code</a><p>Premium web design & development for brands that demand excellence.</p></div>
+                <div class="footer-brand">
+                    <a href="#" class="footer-logo">
+                        <img src="https://raw.githubusercontent.com/KIS566/etch-code/main/cropped_circle_image.png" alt="EC" class="footer-logo-img">
+                        Etch & Code
+                    </a>
+                    <p>Premium web design & development for brands that demand excellence.</p>
+                </div>
                 <div><h4>Navigation</h4><ul class="footer-links"><li><a href="#home">Home</a></li><li><a href="#services">Services</a></li><li><a href="#portfolio">Work</a></li><li><a href="#contact">Contact</a></li></ul></div>
                 <div><h4>Services</h4><ul class="footer-links"><li><a href="#services">Web Design</a></li><li><a href="#services">Development</a></li><li><a href="#services">E-Commerce</a></li><li><a href="#services">Support</a></li></ul></div>
                 <div><h4>Connect</h4><div class="footer-social"><a href="#"><i class="fab fa-instagram"></i></a><a href="#"><i class="fab fa-linkedin-in"></i></a><a href="#"><i class="fab fa-dribbble"></i></a><a href="#"><i class="fab fa-x-twitter"></i></a></div></div>
@@ -425,28 +452,18 @@
             const body=document.body,navbar=document.getElementById('navbar'),themeToggle=document.getElementById('themeToggle'),menuToggle=document.getElementById('menuToggle'),navLinks=document.getElementById('navLinks'),contactForm=document.getElementById('contactForm'),formMsg=document.getElementById('formMsg'),preloader=document.getElementById('preloader');
             if(localStorage.getItem('etch-theme')==='light'){body.classList.add('light-mode');themeToggle.innerHTML='<i class="fas fa-moon"></i>';}else{themeToggle.innerHTML='<i class="fas fa-sun"></i>';}
             themeToggle.addEventListener('click',()=>{body.classList.toggle('light-mode');const l=body.classList.contains('light-mode');themeToggle.innerHTML=l?'<i class="fas fa-moon"></i>':'<i class="fas fa-sun"></i>';localStorage.setItem('etch-theme',l?'light':'dark');});
-            window.addEventListener('load',()=>setTimeout(()=>preloader.classList.add('hidden'),1800));
+            window.addEventListener('load',()=>setTimeout(()=>preloader.classList.add('hidden'),2200));
             menuToggle.addEventListener('click',()=>{navLinks.classList.toggle('open');menuToggle.innerHTML=navLinks.classList.contains('open')?'<i class="fas fa-times"></i>':'<i class="fas fa-bars"></i>';});
             document.querySelectorAll('.nav-links a').forEach(l=>l.addEventListener('click',()=>{navLinks.classList.remove('open');menuToggle.innerHTML='<i class="fas fa-bars"></i>';}));
             window.addEventListener('scroll',()=>navbar.classList.toggle('scrolled',window.scrollY>30));
-
-            // Counter
             const counters=document.querySelectorAll('.counter-number');
             const counterObs=new IntersectionObserver((e)=>{e.forEach(en=>{if(en.isIntersecting){const t=en.target,ta=parseInt(t.getAttribute('data-target'));let c=0;const inc=ta/50;const ti=setInterval(()=>{c+=inc;if(c>=ta){t.textContent=ta+(ta===98?'%':'+');clearInterval(ti);}else{t.textContent=Math.floor(c)+(ta===98?'%':'+');}},30);counterObs.unobserve(t);}});},{threshold:0.5});
             counters.forEach(c=>counterObs.observe(c));
-
-            // FAQ
             document.querySelectorAll('.faq-question').forEach(b=>b.addEventListener('click',()=>{const item=b.parentElement;const was=item.classList.contains('active');document.querySelectorAll('.faq-item').forEach(i=>i.classList.remove('active'));if(!was)item.classList.add('active');}));
-
-            // Reveal
             const reveals=document.querySelectorAll('.reveal');
             const revObs=new IntersectionObserver((e)=>{e.forEach(en=>{if(en.isIntersecting){en.target.classList.add('visible');revObs.unobserve(en.target);}});},{threshold:0.1,rootMargin:'0px 0px -40px 0px'});
             reveals.forEach(r=>revObs.observe(r));
-
-            // Contact Form
             contactForm.addEventListener('submit',async(e)=>{e.preventDefault();const btn=contactForm.querySelector('button'),orig=btn.innerHTML;btn.innerHTML='<i class="fas fa-spinner fa-spin"></i> Sending...';btn.disabled=true;try{const res=await fetch('https://formspree.io/f/xvzvddrl',{method:'POST',body:new FormData(contactForm),headers:{'Accept':'application/json'}});formMsg.innerHTML=res.ok?'<span style="color:var(--gold-bright);">✅ Sent! We\'ll be in touch.</span>':'<span style="color:#e74c3c;">❌ Error. Try again.</span>';if(res.ok)contactForm.reset();}catch(err){formMsg.innerHTML='<span style="color:var(--gold-bright);">✅ Message received!</span>';contactForm.reset();}btn.innerHTML=orig;btn.disabled=false;});
-
-            // Smooth Scroll
             document.querySelectorAll('a[href^="#"]').forEach(a=>a.addEventListener('click',function(e){const h=this.getAttribute('href');if(h==='#')return;const t=document.querySelector(h);if(t){e.preventDefault();t.scrollIntoView({behavior:'smooth'});}}));
         })();
     </script>
